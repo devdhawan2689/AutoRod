@@ -67,7 +67,7 @@ def upload_page():
     return render_template("upload_page.html")
 
 
-def mail_send(email, password):
+def mail_send(email, password, subject):
     # open file in read mode
     user_email = email
     user_password = password
@@ -94,7 +94,7 @@ def mail_send(email, password):
             html = Template(Path('email_template.html').read_text())
             email = EmailMessage()
             email['from'] = user_email
-            email['subject'] = 'Intership at Stark Industries'
+            email['subject'] = subject
             email['to'] = email_id
             email.set_content(html.substitute({'name': name}), 'html')
 
@@ -110,8 +110,22 @@ def mail_send(email, password):
 def upload_file():
     if 'photo' in request.files:
         photo = request.files['photo']
+        if photo.filename == '':
+            return render_template('error_page.html')
         if photo.filename != '':
             photo.filename = 'email_template.csv'
+            photo.save(os.path.join('', photo.filename))
+    return render_template('email_message.html')
+
+
+@app.route('/htmlUpload', methods=['GET', 'POST'])
+def upload_html_file():
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        if photo.filename == '':
+            return render_template('error_page.html')
+        elif photo.filename != '':
+            photo.filename = 'email_template.html'
             photo.save(os.path.join('', photo.filename))
     return render_template('email_signin.html')
 
@@ -120,7 +134,8 @@ def upload_file():
 def email_login():
     email = request.form['email_id']
     password = request.form['email_password']
+    subject = request.form['email_subject']
     print(email)
     print(password)
-    mail_send(email, password)
+    mail_send(email, password, subject)
     return render_template('home_page.html')
