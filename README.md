@@ -8,4 +8,4 @@ The code will automatically update the Name for each email.
 
 PS - The project was made as a website which would be live and available for anyone to use. If you wish to use it as standalone python code you might need to extract the relevant function and make few changes to the variables. 
 
-Note - The SMTP library no longer works for "Gmail" since they have updated their security features. If you figured out a way to make it work hit me up and I will update that part of the code.
+Note - The SMTP library no longer works for "Gmail" since they have updated their security features. If you figured out a way to make it work let me know and I will update that part of the code.
